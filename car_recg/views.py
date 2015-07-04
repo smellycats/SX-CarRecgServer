@@ -39,6 +39,7 @@ class Index(Resource):
 
     def get(self):
         return {'recg_url': 'http://localhost/v1/recg',
+                'uploadrecg_url': 'http://localhost/v1/uploadrecg',
                 'state_url': 'http://localhost/v1/state'}, 200,
         {'Cache-Control': 'public, max-age=60, s-maxage=60'}
 
