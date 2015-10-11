@@ -1,33 +1,46 @@
 # -*- coding: utf-8 -*-
-import time
+import arrow
 
-from peewee import *
-
-from app import db
+from car_recg import db
 
 
-class BaseModel(Model):
-    class Meta:
-        database = db
+class Users(db.Model):
+    """用户"""
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), index=True)
+    password = db.Column(db.String(128))
+    scope = db.Column(db.String(128), default='')
+    date_created = db.Column(db.DateTime, default=arrow.now().datetime)
+    date_modified = db.Column(db.DateTime, default=arrow.now().datetime)
+    banned = db.Column(db.Integer, default=0)
 
-    @classmethod
-    def get_one(cls, *query, **kwargs):
-        # 为了方便使用，新增此接口，查询不到返回None，而不抛出异常
-        try:
-            return cls.get(*query, **kwargs)
-        except DoesNotExist:
-            return None
+    def __init__(self, username, password, scope='', banned=0,
+                 date_created=None, date_modified=None):
+        self.username = username
+        self.password = password
+        self.scope = scope
+        now = arrow.now().datetime
+        if not date_created:
+            self.date_created = now
+        if not date_modified:
+            self.date_modified = now
+        self.banned = banned
+
+    def __repr__(self):
+        return '<Users %r>' % self.id
 
 
-class Users(BaseModel):
-    id = IntegerField(primary_key=True)
-    username = TextField(unique=True)
-    password = TextField()
-    banned = BooleanField(default=False)
+class Scope(db.Model):
+    """权限范围"""
+    __tablename__ = 'scope'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), unique=True)
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return '<Scope %r>' % self.id
 
 
-class Recglist(BaseModel):
-    id = IntegerField(primary_key=True)
-    timestamp = IntegerField(default=int(time.time()))
-    imgurl = TextField()
-    recginfo = TextField()
