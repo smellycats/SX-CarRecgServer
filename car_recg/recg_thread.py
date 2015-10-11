@@ -3,7 +3,7 @@ import time
 import Queue
 import threading
 
-from app import app, logger
+from car_recg import app, logger
 from carrecg import CarRecgEngine
 
 

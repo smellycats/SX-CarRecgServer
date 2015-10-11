@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from app import app, logger
+from car_recg import app, logger
 from recg_thread import RecgThread
 from iniconf import MyIni
 
