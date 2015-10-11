@@ -7,7 +7,7 @@ from ctypes import *
 
 from PIL import Image
 
-from app import app, logger
+from car_recg import app, logger
 
 
 class CarRecgEngine:
