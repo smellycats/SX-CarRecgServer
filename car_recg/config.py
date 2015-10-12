@@ -12,7 +12,7 @@ class Config(object):
     # token生存周期，默认1小时 int
     EXPIRES = 7200
     # 数据库连接 string
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:root@127.0.0.1/hbc_store'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///../carrecgser.db'
     # 数据库连接绑定 dict
     SQLALCHEMY_BINDS = {}
     # 用户权限范围 dict
