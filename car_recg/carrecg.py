@@ -16,6 +16,7 @@ class CarRecgEngine:
         """创建车型识别引擎"""
         self.dll = ctypes.cdll.LoadLibrary('CarRecogniseEngine.dll')
         self.engineID = self.dll.InitialEngine()
+        self.crop_path = app.config['CROP_PATH']
 
     def __del__(self):
         self.dll.UnInitialEngine(self.engineID)
@@ -24,8 +25,17 @@ class CarRecgEngine:
         """识别车辆信息"""
         try:
             recg_path = None
-            if coord != []:
-                path = self.crop_img(path, coord)
+            im = Image.open(path)
+            width, height = im.size
+            file_name = os.path.basename(path)
+            if coord == []:
+                # 合并图片则切分
+                if width > height * 2:
+                    box = [0, 0, width/2, height]
+                    path = self.crop_img2(im, file_name, box)
+                    recg_path = path
+            else:
+                path = self.crop_img2(path, coord)
                 recg_path = path
 
             p_str_url = create_string_buffer(path)
@@ -56,6 +66,24 @@ class CarRecgEngine:
 
         return json.loads(j, 'gbk')
 
+    def thum_img(self, im, file_name, thum_size):
+        """图片大小处理"""
+        im.thumbnail(thum_size)
+
+        crop_path = os.path.join(self.crop_path, file_name)
+        im.save(crop_path)
+
+        return crop_path
+
+    def crop_img2(self, im, file_name, box):
+        """图片截取"""
+        region = im.crop(box)
+
+        crop_path = os.path.join(self.crop_path, file_name)
+        region.save(crop_path)
+
+        return crop_path
+
     def crop_img(self, path, coord):
         """图片截取"""
         im = Image.open(path)
@@ -65,7 +93,7 @@ class CarRecgEngine:
 
         filename = os.path.basename(path)
 
-        crop_path = os.path.join(app.config['CROP_PATH'], filename)
+        crop_path = os.path.join(self.crop_path, filename)
         region.save(crop_path)
 
         return crop_path
