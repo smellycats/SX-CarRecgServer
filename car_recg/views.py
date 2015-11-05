@@ -84,7 +84,7 @@ class Index(Resource):
         }, 200, {'Cache-Control': 'public, max-age=60, s-maxage=60'}
 
 class User(Resource):
-    decorators = [limiter.limit("5000/hours")]
+    #decorators = [limiter.limit("5000/hours")]
 
     @verify_addr
     @verify_token
@@ -137,7 +137,7 @@ class User(Resource):
 
 
 class UserList(Resource):
-    decorators = [limiter.limit("50/minute")]
+    #decorators = [limiter.limit("50/minute")]
 
     @verify_addr
     @verify_token
@@ -212,7 +212,7 @@ def get_uid():
 
 
 class TokenList(Resource):
-    decorators = [limiter.limit("5/hour", get_uid)]
+    #decorators = [limiter.limit("5/hour", get_uid)]
 
     @verify_addr
     def post(self):
