@@ -39,8 +39,8 @@ def uploadrecg_test():
     print r.status_code
 
 if __name__ == '__main__':
-    #requests_test()
-    uploadrecg_test()
+    requests_test()
+    #uploadrecg_test()
 ##    url = 'http://localhost/imgareaselect/imgs/1123.jpg'
 ##    path = 'img/test.jpg'
 ##    try:
