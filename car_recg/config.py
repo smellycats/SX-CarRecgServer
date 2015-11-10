@@ -30,7 +30,7 @@ class Config(object):
     # 图片截取文件夹 string
     CROP_PATH = 'crop'
     # 超时 int
-    TIMEOUT = 5
+    TIMEOUT = 10
     # 识别优先队列 object
     RECGQUE = Queue.PriorityQueue()
     # 退出标记 bool

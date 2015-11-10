@@ -17,6 +17,7 @@ class MyIni:
         conf = {}
         conf['threads'] = self.cf.getint('SYSSET', 'threads')
         conf['port'] = self.cf.getint('SYSSET', 'port')
+        conf['timeout'] = self.cf.getint('SYSSET', 'timeout')
         conf['selfip'] = self.cf.get('SYSSET', 'selfip')
 
         return conf

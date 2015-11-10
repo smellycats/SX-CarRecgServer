@@ -9,6 +9,7 @@ if __name__ == '__main__':
     sys_ini = my_ini.get_sys_conf()
     app.config['THREADS'] = sys_ini['threads']
     app.config['MAXSIZE'] = sys_ini['threads'] * 16
+    app.config['TIMEOUT'] = sys_int['timeout']
     app.run(host='0.0.0.0', port=sys_ini['port'], threaded=True)
     del rs
     del my_ini
