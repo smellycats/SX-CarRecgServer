@@ -35,14 +35,14 @@ class CarRecgEngine:
                     path = self.crop_img2(im, file_name, box)
                     recg_path = path
             else:
-                path = self.crop_img2(path, coord)
+                path = self.crop_img2(im, file_name, coord)
                 recg_path = path
 
             p_str_url = create_string_buffer(path)
             sz_result = create_string_buffer('\0' * 1024)
 
-            ret = self.dll.doRecg(self.engineID, byref(p_str_url),
-                                  byref(sz_result), 1024)
+            ret = self.dll.GetCarType(self.engineID, byref(p_str_url),
+                                      byref(sz_result), 1024)
 
             res = sz_result.value.decode(encoding='gbk', errors='ignore')
 
